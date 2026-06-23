@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contratos</title>
+</head>
+<body>
+
+<h1>Listado de Contratos</h1>
+
+<div th:if="${mensajeExito}">
+    <p style="color:green;" th:text="${mensajeExito}"></p>
+</div>
+
+<div th:if="${mensajeError}">
+    <p style="color:red;" th:text="${mensajeError}"></p>
+</div>
+
+<form th:action="@{/contratos}" method="get">
+
+    <label>Propiedad:</label>
+    <select name="propiedadId">
+        <option value="">Todas</option>
+        <option th:each="p : ${propiedades}"
+                th:value="${p.id}"
+                th:text="${p.direccion}"
+                th:selected="${propiedadId != null and propiedadId == p.id}">
+        </option>
+    </select>
+
+    <label>Inquilino:</label>
+    <select name="inquilinoId">
+        <option value="">Todos</option>
+        <option th:each="persona : ${personas}"
+                th:value="${persona.id}"
+                th:text="${persona.nombre + ' ' + persona.apellido}"
+                th:selected="${inquilinoId != null and inquilinoId == persona.id}">
+        </option>
+    </select>
+
+    <label>Estado:</label>
+    <select name="estado">
+        <option value="">Todos</option>
+        <option th:each="e : ${estados}"
+                th:value="${e}"
+                th:text="${e}"
+                th:selected="${estadoSeleccionado != null and estadoSeleccionado == e}">
+        </option>
+    </select>
+
+    <label>Fecha inicio:</label>
+    <input type="date" name="fechaInicio" th:value="${fechaInicio}">
+
+    <button type="submit">Filtrar</button>
+    <a th:href="@{/contratos}">Limpiar</a>
+
+</form>
+
+<br>
+
+<a th:href="@{/contratos/nuevo}">Nuevo contrato</a>
+
+<br><br>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Propiedad</th>
+            <th>Propietario</th>
+            <th>Inquilino</th>
+            <th>Fecha inicio</th>
+            <th>Importe mensual</th>
+            <th>Día vencimiento</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="contrato : ${contratos}">
+            <td th:text="${contrato.id}"></td>
+            <td th:text="${contrato.propiedad != null ? contrato.propiedad.direccion : ''}"></td>
+            <td th:text="${contrato.propiedad != null and contrato.propiedad.propietario != null ? contrato.propiedad.propietario.nombre + ' ' + contrato.propiedad.propietario.apellido : ''}"></td>
+            <td th:text="${contrato.inquilino != null ? contrato.inquilino.nombre + ' ' + contrato.inquilino.apellido : ''}"></td>
+            <td th:text="${contrato.fechaInicio}"></td>
+            <td th:text="${contrato.importeMensual}"></td>
+            <td th:text="${contrato.diaVencimientoMensual}"></td>
+            <td th:text="${contrato.estado}"></td>
+            <td>
+                <a th:href="@{/contratos/editar/{id}(id=${contrato.id})}">Editar</a>
+                |
+                <a th:href="@{/contratos/eliminar/{id}(id=${contrato.id})}">Eliminar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
