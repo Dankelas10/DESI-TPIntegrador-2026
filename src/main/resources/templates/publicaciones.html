@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Publicaciones</title>
+</head>
+<body>
+
+<h1>Listado de Publicaciones</h1>
+
+<a th:href="@{/publicaciones/nueva}">Nueva Publicación</a>
+
+<br><br>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Propiedad</th>
+            <th>Precio mensual</th>
+            <th>Estado</th>
+            <th>Fecha publicación</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="publicacion : ${publicaciones}">
+            <td th:text="${publicacion.id}"></td>
+            <td th:text="${publicacion.propiedad != null ? publicacion.propiedad.direccion : 'Sin propiedad'}"></td>
+            <td th:text="${publicacion.precioMensual}"></td>
+            <td th:text="${publicacion.estado}"></td>
+            <td th:text="${publicacion.fechaPublicacion}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(publicaciones)}">
+    No hay publicaciones cargadas.
+</p>
+
+</body>
+</html>
