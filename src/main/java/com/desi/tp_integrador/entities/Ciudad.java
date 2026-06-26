@@ -4,47 +4,46 @@ import jakarta.persistence.*;
 
 @Entity
 public class Ciudad {
-	
-	 @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long id;
 
-	    private String nombre;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	    private String codigoPostal;
+    private String nombre;
 
-	    private Boolean eliminado = false;
+    private String codigoPostal;
 
-	    public Long getId() {
-	        return id;
-	    }
+    private Boolean eliminado = false;
 
-	    public String getNombre() {
-	        return nombre;
-	    }
+    public Long getId() {
+        return id;
+    }
 
-	    public String getCodigoPostal() {
-	        return codigoPostal;
-	    }
+    public String getNombre() {
+        return nombre;
+    }
 
-	    public Boolean getEliminado() {
-	        return eliminado;
-	    }
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
 
-	    public void setId(Long id) {
-	        this.id = id;
-	    }
+    public Boolean getEliminado() {
+        return eliminado;
+    }
 
-	    public void setNombre(String nombre) {
-	        this.nombre = nombre;
-	    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	    public void setCodigoPostal(String codigoPostal) {
-	        this.codigoPostal = codigoPostal;
-	    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	    public void setEliminado(Boolean eliminado) {
-	        this.eliminado = eliminado;
-	    }
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
 
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
+    }
 }

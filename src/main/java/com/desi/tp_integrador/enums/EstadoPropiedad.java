@@ -5,5 +5,4 @@ public enum EstadoPropiedad {
     RESERVADA,
     ALQUILADA,
     INACTIVA
-
 }

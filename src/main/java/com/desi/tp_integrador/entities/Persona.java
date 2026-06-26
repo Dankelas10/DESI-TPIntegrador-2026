@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 public class Persona {
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -76,5 +76,4 @@ public class Persona {
     public void setEliminado(Boolean eliminado) {
         this.eliminado = eliminado;
     }
-
 }
