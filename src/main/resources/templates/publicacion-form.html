@@ -11,7 +11,7 @@
 <form th:action="@{/publicaciones/guardar}" th:object="${publicacion}" method="post">
 
     <label>Propiedad:</label>
-    <select th:field="*{propiedad}" required>
+    <select name="propiedadId" required>
         <option value="">Seleccione una propiedad</option>
         <option th:each="propiedad : ${propiedades}"
                 th:value="${propiedad.id}"

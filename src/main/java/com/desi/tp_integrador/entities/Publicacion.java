@@ -68,7 +68,7 @@ public class Publicacion {
 	        return estado;
 	    }
 
-	    public Boolean getEliminada() {
+	    public Boolean getEliminado() {
 	        return eliminado;
 	    }
 
@@ -102,7 +102,7 @@ public class Publicacion {
 	        this.estado = estado;
 	    }
 
-	    public void setEliminada(Boolean eliminado) {
+	    public void setEliminado(Boolean eliminado) {
 	        this.eliminado = eliminado;
 	    }
 

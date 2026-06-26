@@ -11,7 +11,7 @@ public interface PublicacionService {
 
     Optional<Publicacion> buscarPorId(Long id);
 
-    Publicacion guardar(Publicacion publicacion);
+    Publicacion guardar(Publicacion publicacion, Long propiedadId);
 
     Publicacion actualizar(Publicacion publicacion);
 
