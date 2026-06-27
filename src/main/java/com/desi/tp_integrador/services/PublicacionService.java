@@ -10,11 +10,13 @@ public interface PublicacionService {
     List<Publicacion> listarTodas();
 
     Optional<Publicacion> buscarPorId(Long id);
+    
+    Publicacion obtenerPorId(Long id);
 
     Publicacion guardar(Publicacion publicacion, Long propiedadId);
 
     Publicacion actualizar(Publicacion publicacion);
-
+  
     void eliminar(Long id);
 
 }

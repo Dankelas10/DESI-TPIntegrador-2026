@@ -26,7 +26,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 
 	    @Override
 	    public List<Publicacion> listarTodas() {
-	        return publicacionRepository.findAll();
+	    	return publicacionRepository.findByEliminadoFalse();
 	    }
 
 	    @Override
@@ -65,15 +65,38 @@ public class PublicacionServiceImpl implements PublicacionService {
 
 	        return publicacionRepository.save(publicacion);
 	    }
+	    
+	    @Override
+	    public Publicacion obtenerPorId(Long id) {
+	        return publicacionRepository.findById(id)
+	                .orElseThrow(() -> new RuntimeException("La publicación no existe"));
+	    }
 
 	    @Override
 	    public Publicacion actualizar(Publicacion publicacion) {
-	        return publicacionRepository.save(publicacion);
+
+	        Publicacion publicacionExistente = publicacionRepository.findById(publicacion.getId())
+	                .orElseThrow(() -> new RuntimeException("La publicación no existe"));
+
+	        publicacionExistente.setPrecioMensual(publicacion.getPrecioMensual());
+	        publicacionExistente.setCondiciones(publicacion.getCondiciones());
+	        publicacionExistente.setDescripcion(publicacion.getDescripcion());
+	        publicacionExistente.setEstado(publicacion.getEstado());
+
+	        return publicacionRepository.save(publicacionExistente);
 	    }
 
 	    @Override
 	    public void eliminar(Long id) {
-	        publicacionRepository.deleteById(id);
+	        Publicacion publicacion = publicacionRepository.findById(id)
+	                .orElseThrow(() -> new RuntimeException("La publicación no existe"));
+
+	        if (publicacion.getEstado() != EstadoPublicacion.ACTIVA) {
+	            throw new RuntimeException("Solo se pueden eliminar publicaciones activas");
+	        }
+
+	        publicacion.setEliminado(true);
+	        publicacionRepository.save(publicacion);
 	    }
 
 }

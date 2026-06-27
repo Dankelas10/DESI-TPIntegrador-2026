@@ -8,16 +8,28 @@
 
 <h1>Nueva Publicación</h1>
 
-<form th:action="@{/publicaciones/guardar}" th:object="${publicacion}" method="post">
+<<form th:action="${publicacion.id == null} ? @{/publicaciones/guardar} : @{/publicaciones/actualizar}" 
+      th:object="${publicacion}" 
+      method="post">
+	
+	<input type="hidden" th:field="*{id}">
 
-    <label>Propiedad:</label>
-    <select name="propiedadId" required>
-        <option value="">Seleccione una propiedad</option>
-        <option th:each="propiedad : ${propiedades}"
-                th:value="${propiedad.id}"
-                th:text="${propiedad.direccion}">
-        </option>
-    </select>
+	<label>Propiedad:</label>
+
+	<div th:if="${publicacion.id == null}">
+	    <select name="propiedadId" required>
+	        <option value="">Seleccione una propiedad</option>
+	        <option th:each="propiedad : ${propiedades}"
+	                th:value="${propiedad.id}"
+	                th:text="${propiedad.direccion + ' - ' + propiedad.ciudad.nombre + ' (' + propiedad.ciudad.codigoPostal + ')'}">
+	        </option>
+	    </select>
+	</div>
+
+	<div th:if="${publicacion.id != null}">
+	    <span th:text="${publicacion.propiedad.direccion + ' - ' + publicacion.propiedad.ciudad.nombre + ' (' + publicacion.propiedad.ciudad.codigoPostal + ')'}"></span>
+	    <input type="hidden" name="propiedadId" th:value="${publicacion.propiedad.id}">
+	</div>
 
     <br><br>
 
@@ -31,12 +43,22 @@
 
     <br><br>
 
-    <label>Descripción:</label>
-    <textarea th:field="*{descripcion}"></textarea>
+	<label>Descripción:</label>
+	<textarea th:field="*{descripcion}"></textarea>
 
-    <br><br>
+	<br><br>
 
-    <button type="submit">Guardar</button>
+	<label>Estado:</label>
+	<select th:field="*{estado}">
+	    <option th:each="estado : ${estadosPublicacion}"
+	            th:value="${estado}"
+	            th:text="${estado}">
+	    </option>
+	</select>
+
+	<br><br>
+
+	<button type="submit">Guardar</button>
 
 </form>
 

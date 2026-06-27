@@ -20,15 +20,26 @@
             <th>Precio mensual</th>
             <th>Estado</th>
             <th>Fecha publicación</th>
+			<th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         <tr th:each="publicacion : ${publicaciones}">
             <td th:text="${publicacion.id}"></td>
-            <td th:text="${publicacion.propiedad != null ? publicacion.propiedad.direccion : 'Sin propiedad'}"></td>
+			<td th:text="${publicacion.propiedad != null ? publicacion.propiedad.direccion + ' - ' + publicacion.propiedad.ciudad.nombre + ' (' + publicacion.propiedad.ciudad.codigoPostal + ')' : 'Sin propiedad'}"></td>
             <td th:text="${publicacion.precioMensual}"></td>
             <td th:text="${publicacion.estado}"></td>
             <td th:text="${publicacion.fechaPublicacion}"></td>
+			<td>
+			    <a th:href="@{/publicaciones/editar/{id}(id=${publicacion.id})}">
+			        Editar
+			    </a>
+			    |
+			    <a th:href="@{/publicaciones/eliminar/{id}(id=${publicacion.id})}"
+			       onclick="return confirm('¿Seguro que desea eliminar esta publicación?')">
+			        Eliminar
+			    </a>
+			</td>
         </tr>
     </tbody>
 </table>

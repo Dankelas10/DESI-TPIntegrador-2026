@@ -1,6 +1,7 @@
 package com.desi.tp_integrador.entities;
 
 import java.math.BigDecimal;
+import jakarta.persistence.Column;
 import java.time.LocalDate;
 
 import com.desi.tp_integrador.enums.EstadoPublicacion;
@@ -13,30 +14,32 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Column;
 
 @Entity
 public class Publicacion {
 	
-	 @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	    @ManyToOne
-	    @JoinColumn(name = "propiedad_id", nullable = false)
-	    private Propiedad propiedad;
+	@ManyToOne
+	@JoinColumn(name = "propiedad_id", nullable = false)
+	private Propiedad propiedad;
 
-	    private BigDecimal precioMensual;
+	private BigDecimal precioMensual;
 
-	    private String condiciones;
+	private String condiciones;
 
-	    private String descripcion;
+	@Column(length = 500)
+	private String descripcion;
 
-	    private LocalDate fechaPublicacion;
+	private LocalDate fechaPublicacion;
 
-	    @Enumerated(EnumType.STRING)
-	    private EstadoPublicacion estado = EstadoPublicacion.ACTIVA;
+	@Enumerated(EnumType.STRING)
+	private EstadoPublicacion estado = EstadoPublicacion.ACTIVA;
 
-	    private Boolean eliminado = false;
+	private Boolean eliminado = false;
 
 	    // Getters
 

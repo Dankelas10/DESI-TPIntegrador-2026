@@ -12,4 +12,6 @@ public interface PropiedadRepository extends JpaRepository<Propiedad, Long> {
     List<Propiedad> findByEliminadoFalse();
 
     List<Propiedad> findByEstadoAndEliminadoFalse(EstadoPropiedad estado);
+    
+    List<Propiedad> findByEliminadoFalseAndEstado(EstadoPropiedad estado);
 }
