@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Factura</title>
+</head>
+<body>
+
+<h1>Formulario de Factura</h1>
+
+<form th:action="@{/facturas/guardar}" th:object="${factura}" method="post">
+
+    <input type="hidden" th:field="*{id}">
+
+    <label>Contrato:</label>
+    <!-- El contrato solo se elige en el alta. En edición queda de solo lectura. -->
+    <select th:field="*{contrato}" th:disabled="*{id != null}">
+        <option value="">Seleccione un contrato</option>
+        <option th:each="c : ${contratos}"
+                th:value="${c.id}"
+                th:text="${'#' + c.id + ' - ' + (c.propiedad != null ? c.propiedad.direccion : '')}">
+        </option>
+    </select>
+    <!-- Si el select está deshabilitado, no se envía: lo mandamos por hidden -->
+    <input type="hidden" th:if="*{id != null}" name="contrato" th:value="*{contrato != null ? contrato.id : ''}">
+    <br><br>
+
+    <label>Concepto:</label>
+    <input type="text" th:field="*{concepto}">
+    <br><br>
+
+    <label>Fecha emisión:</label>
+    <input type="date" th:field="*{fechaEmision}">
+    <br><br>
+
+    <label>Fecha vencimiento:</label>
+    <input type="date" th:field="*{fechaVencimiento}">
+    <br><br>
+
+    <label>Importe:</label>
+    <input type="number" step="0.01" th:field="*{importe}">
+    <br><br>
+
+    <label>Estado:</label>
+    <select th:field="*{estado}">
+        <option th:each="e : ${estados}"
+                th:value="${e}"
+                th:text="${e}">
+        </option>
+    </select>
+    <br><br>
+
+    <hr>
+    <h3>Datos de pago (solo si el estado es PAGADA)</h3>
+
+    <label>Fecha de pago:</label>
+    <input type="date" th:field="*{fechaPago}">
+    <br><br>
+
+    <label>Medio de pago:</label>
+    <select th:field="*{medioPago}">
+        <option value="">Seleccione un medio de pago</option>
+        <option th:each="m : ${mediosPago}"
+                th:value="${m}"
+                th:text="${m}">
+        </option>
+    </select>
+    <br><br>
+
+    <label>Importe pagado:</label>
+    <input type="number" step="0.01" th:field="*{importePagado}">
+    <br><br>
+
+    <label>Interés pagado:</label>
+    <input type="number" step="0.01" th:field="*{interesPagado}">
+    <br><br>
+
+    <button type="submit">Guardar</button>
+    <a th:href="@{/facturas}">Volver</a>
+
+</form>
+
+</body>
+</html>
