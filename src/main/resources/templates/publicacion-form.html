@@ -8,6 +8,10 @@
 
 <h1>Nueva Publicación</h1>
 
+<div th:if="${error}" style="color: red; font-weight: bold;">
+    <p th:text="${error}"></p>
+</div>
+
 <<form th:action="${publicacion.id == null} ? @{/publicaciones/guardar} : @{/publicaciones/actualizar}" 
       th:object="${publicacion}" 
       method="post">

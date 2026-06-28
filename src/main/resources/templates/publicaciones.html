@@ -12,34 +12,97 @@
 
 <br><br>
 
+<h3>Filtros</h3>
+
+<form th:action="@{/publicaciones}" method="get">
+
+    <label>Propiedad:</label>
+    <select name="propiedadId">
+        <option value="">Todas</option>
+        <option th:each="propiedad : ${propiedades}"
+                th:value="${propiedad.id}"
+                th:text="${propiedad.direccion + ' - ' + propiedad.ciudad.nombre + ' (' + propiedad.ciudad.codigoPostal + ')'}">
+        </option>
+    </select>
+
+    <br><br>
+
+    <label>Ciudad:</label>
+    <select name="ciudadId">
+        <option value="">Todas</option>
+        <option th:each="ciudad : ${ciudades}"
+                th:value="${ciudad.id}"
+                th:text="${ciudad.nombre}">
+        </option>
+    </select>
+
+    <br><br>
+
+    <label>Estado:</label>
+    <select name="estado">
+        <option value="">Todos</option>
+        <option th:each="estado : ${estadosPublicacion}"
+                th:value="${estado}"
+                th:text="${estado}">
+        </option>
+    </select>
+
+    <br><br>
+
+    <label>Precio mínimo:</label>
+    <input type="number" step="0.01" name="precioMin">
+
+    <br><br>
+
+    <label>Precio máximo:</label>
+    <input type="number" step="0.01" name="precioMax">
+
+    <br><br>
+
+    <button type="submit">Filtrar</button>
+    <a th:href="@{/publicaciones}">Limpiar filtros</a>
+
+</form>
+
+<br><br>
+
 <table border="1">
     <thead>
         <tr>
             <th>ID</th>
             <th>Propiedad</th>
+            <th>Ciudad</th>
             <th>Precio mensual</th>
             <th>Estado</th>
             <th>Fecha publicación</th>
-			<th>Acciones</th>
+            <th>Acciones</th>
         </tr>
     </thead>
+
     <tbody>
         <tr th:each="publicacion : ${publicaciones}">
             <td th:text="${publicacion.id}"></td>
-			<td th:text="${publicacion.propiedad != null ? publicacion.propiedad.direccion + ' - ' + publicacion.propiedad.ciudad.nombre + ' (' + publicacion.propiedad.ciudad.codigoPostal + ')' : 'Sin propiedad'}"></td>
+
+            <td th:text="${publicacion.propiedad != null ? publicacion.propiedad.direccion : 'Sin propiedad'}"></td>
+
+            <td th:text="${publicacion.propiedad != null && publicacion.propiedad.ciudad != null ? publicacion.propiedad.ciudad.nombre + ' (' + publicacion.propiedad.ciudad.codigoPostal + ')' : 'Sin ciudad'}"></td>
+
             <td th:text="${publicacion.precioMensual}"></td>
+
             <td th:text="${publicacion.estado}"></td>
+
             <td th:text="${publicacion.fechaPublicacion}"></td>
-			<td>
-			    <a th:href="@{/publicaciones/editar/{id}(id=${publicacion.id})}">
-			        Editar
-			    </a>
-			    |
-			    <a th:href="@{/publicaciones/eliminar/{id}(id=${publicacion.id})}"
-			       onclick="return confirm('¿Seguro que desea eliminar esta publicación?')">
-			        Eliminar
-			    </a>
-			</td>
+
+            <td>
+                <a th:href="@{/publicaciones/editar/{id}(id=${publicacion.id})}">
+                    Editar
+                </a>
+                |
+                <a th:href="@{/publicaciones/eliminar/{id}(id=${publicacion.id})}"
+                   onclick="return confirm('¿Seguro que desea eliminar esta publicación?')">
+                    Eliminar
+                </a>
+            </td>
         </tr>
     </tbody>
 </table>
